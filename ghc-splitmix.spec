@@ -5,7 +5,7 @@
 Summary:	splitmix: Fast Splittable PRNG
 Name:		ghc-splitmix
 Version:	0.0.4
-Release:	1
+Release:	2
 License:	BSD
 Group:		Development/Languages
 #Source0Download: http://hackage.haskell.org/package/splitmix
@@ -19,7 +19,7 @@ BuildRequires:	ghc-prof >= 6.12.3
 BuildRequires:	ghc-random-prof
 %endif
 BuildRequires:	rpmbuild(macros) >= 1.608
-%requires_releq	ghc
+%requires_eq	ghc
 Requires:	ghc-random
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
