@@ -3,6 +3,7 @@
 %bcond_without	prof	# profiling library
 #
 Summary:	splitmix: Fast Splittable PRNG
+Summary(pl.UTF-8):	splitmix - szybki, podzielny PRNG
 Name:		ghc-splitmix
 Version:	0.0.4
 Release:	3
@@ -12,15 +13,29 @@ Group:		Development/Languages
 Source0:	http://hackage.haskell.org/package/splitmix-%{version}/splitmix-%{version}.tar.gz
 # Source0-md5:	a6d7539078d2c88de87f73756939dee4
 URL:		http://hackage.haskell.org/package/splitmix
-BuildRequires:	ghc
-BuildRequires:	ghc-random
+BuildRequires:	ghc >= 7.0.1
+BuildRequires:	ghc-base >= 4.3
+BuildRequires:	ghc-base < 4.15
+BuildRequires:	ghc-deepseq >= 1.3.0.0
+BuildRequires:	ghc-deepseq < 1.5
+BuildRequires:	ghc-random >= 1.0
+BuildRequires:	ghc-random < 1.2
+BuildRequires:	ghc-time >= 1.2.0.3
+BuildRequires:	ghc-time < 1.10
 %if %{with prof}
-BuildRequires:	ghc-prof >= 6.12.3
-BuildRequires:	ghc-random-prof
+BuildRequires:	ghc-prof >= 7.0.1
+BuildRequires:	ghc-base-prof >= 4.3
+BuildRequires:	ghc-base-prof < 4.15
+BuildRequires:	ghc-deepseq-prof >= 1.3.0.0
+BuildRequires:	ghc-deepseq-prof < 1.5
+BuildRequires:	ghc-random-prof >= 1.0
+BuildRequires:	ghc-random-prof < 1.2
+BuildRequires:	ghc-time-prof >= 1.2.0.3
+BuildRequires:	ghc-time-prof < 1.10
 %endif
 BuildRequires:	rpmbuild(macros) >= 1.608
 %requires_eq	ghc
-Requires:	ghc-random
+Requires:	ghc-random >= 1.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # debuginfo is not useful for ghc
@@ -30,7 +45,16 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_noautocompressdoc	*.haddock
 
 %description
-Pure Haskell implementation of SplitMix described in
+Pure Haskell implementation of SplitMix described in:
+
+Guy L. Steele, Jr., Doug Lea, and Christine H. Flood. 2014.
+Fast splittable pseudorandom number generators. In Proceedings of the
+2014 ACM International Conference on Object Oriented Programming
+Systems Languages & Applications (OOPSLA '14). ACM, New York, NY, USA,
+453-472. DOI: https://doi.org/10.1145/2660193.2660195
+
+%description -l pl.UTF-8
+Czysto haskellowa implementacja SplitMix, opisanego w dokuencie:
 
 Guy L. Steele, Jr., Doug Lea, and Christine H. Flood. 2014.
 Fast splittable pseudorandom number generators. In Proceedings of the
@@ -43,11 +67,11 @@ Summary:	Profiling splitmix library for GHC
 Summary(pl.UTF-8):	Biblioteka profilująca splitmix dla GHC
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	ghc-random-prof
+Requires:	ghc-random-prof >= 1.0
 
 %description prof
-Profiling splitmix library for GHC.  Should be installed when
-GHC's profiling subsystem is needed.
+Profiling splitmix library for GHC. Should be installed when GHC's
+profiling subsystem is needed.
 
 %description prof -l pl.UTF-8
 Biblioteka profilująca splitmix dla GHC. Powinna być zainstalowana
@@ -65,6 +89,7 @@ runhaskell Setup.hs configure -v2 \
 	--docdir=%{_docdir}/%{name}-%{version}
 
 runhaskell Setup.hs build
+
 runhaskell Setup.hs haddock --executables
 
 %install
